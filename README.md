@@ -55,7 +55,7 @@ keep at the bottom of snippets.h for copy/pasting
 (**headdesk**) (`Apparently, I wrote the definition, but not the declaration. I need more
 sleep.`)
 
-
+```
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
@@ -73,4 +73,4 @@ JCwfCb/NnT0Q1f9q1voAKaXxVIGIX/ATLvgSOvPJOEU2dFYz7vQfEwCRd46ocoOo
 EJfCFufxOyRBZsY+esra
 =axyy
 -----END PGP SIGNATURE-----
-'``)
+```
