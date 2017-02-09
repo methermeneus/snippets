@@ -175,6 +175,7 @@ void printbits (uint64 input);
 void printbits (int8 input);
 void printbits (int16 input);
 void printbits (int32 input);
+void printbits (int64 input);
 
 #define SNIPPETS_H
 #endif

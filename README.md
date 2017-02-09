@@ -51,8 +51,9 @@ templates, because screw C++ templates. Or, I can just wait 'till Jonathan Blow
 releases JAI, I suppose.
 - [ ] make a Vim shortcut to create comment boxes, so I can get rid of the one I
 keep at the bottom of snippets.h for copy/pasting
-- [ ] overload `printbits()` for int64, because I apparently forgot
-(**headdesk**)
+- [x] overload `printbits()` for int64, because I apparently forgot
+(**headdesk**) (`Apparently, I wrote the definition, but not the declaration. I need more
+sleep.`)
 
 
 -----BEGIN PGP SIGNATURE-----
