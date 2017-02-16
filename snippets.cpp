@@ -29,12 +29,14 @@ int pow (int base, int exp) {
  **                                                                **
  *******************************************************************/
 void swap (int* x, int* y) {
+	if (x == y) return; // x ^ x = 0, which would be bad!
 	*x ^= *y;
 	*y ^= *x;
 	*x ^= *y;
 }
 
 void swapPtr (void** x, void** y) {
+	if (x == y) return; // x ^ x = 0, which would be bad!
 	// Each version basically evaluates to the other; I'm sure there'd be
 	// no difference in a disassembler. Yes, I've tested that this works
 	// withotu errors, at least in basic cases.
@@ -87,7 +89,18 @@ void printbits (int64 input) {
  **                 FOR DEBUGGING PURPOSES ONLY                    **
  **                                                                **
  *******************************************************************/
+
 int main () {
+
+	int x[4] = {-1, 2, -3, 4};
+	float y[4] = {-1.3, 2.718281828459045, -3.0, 4.17};
+
+	for (int i = 0; i < 4; ++i) {
+		printf ("x[%d] = %d;\ty[%d] = %f\n", i, abs(x[i]), i, abs(y[i]));
+	}
+
+	printf ("sizeof int is %lu\nsizeof float is %lu\n", sizeof (int), sizeof (float));
+
 	return 0;
 }
 #endif

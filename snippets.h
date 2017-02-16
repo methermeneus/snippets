@@ -22,6 +22,14 @@
  **       - Make a Vim shortcut to create these comment boxes, so  **
  **           I can get rid of the copy/paste example on the bottom**
  **           of the file.                                         **
+ **       - Error reporting function (no, we don't need try/throw/ **
+ **           catch, dammit!). Something along the lines of        **
+ **           int error (char* mesg, int retval), maybe.           **
+ **                                                                **
+ **                                                                **
+ **                                                                **
+ **                                                                **
+ **                                                                **
  **                                                                **
  *******************************************************************/
 #include <stdio.h>
@@ -134,6 +142,31 @@ inline uint sex (int x) {
 // Nonbranching math functions for int.
 // Nonbranching version of abs().
 inline int abs (int x) {return (x ^ sex(x)) - sex(x);}
+
+// Not hard to make a float version, but it turns out a float version's
+// basically useless, too.
+
+//
+// Okay, why is this working on my Windows VM, but not on my main Linux
+// box? This doesn't use anything but C primitives.
+//
+// inline float abs (float x) {
+//		char *sign = (char*) &x + sizeof (float) - 1;
+//		char mask = (*sign) >> 1;
+//		*sign = ((*sign) ^ mask) - *sign;
+//		return (x);
+// }
+//
+// I'm seriously annoyed by this. I don't think endianness would affect
+// this (the compiler's supposed to take care of that), but I've tried
+// realigning *sign and shifting mask by different amounts in both
+// directions, and at best I get back what I put in; most of the time, I
+// get back garbage or evidence that I'm only altering the lower-order
+// bits of the mantissa (eg: 1.3 returns 1.297784 or whatever).
+//
+//
+
+
 // If I ever need a nonbranching float absval, uncomment:
 // inline float abs (float x) {int y = ((int&)x & 0x7fffffff); return; (float&) y;
 // Unfortunately, the casting requires an lvalue, while the operation
@@ -150,7 +183,7 @@ inline int ceil   (int a, int b) {return a + ((b-a) & ~sex (b-a));}
  **                                                                **
  *******************************************************************/
 // Swap values without storing an extra variable. (XOR). This works for
-// all variables, including float and pointers, but you have to cast them
+// all primitives, including float and pointers, but you have to cast them
 // right:
 // swap ((int*)&float, (int*)&float);
 // swap((int*)(&pointer), (int*)(&pointer));
@@ -158,6 +191,23 @@ inline int ceil   (int a, int b) {return a + ((b-a) & ~sex (b-a));}
 // implement swapPtr(). If using swap() on a pointer doesn't work, use
 // swapPtr and it will work. Just remember, it doesn't always work on
 // arrays, probably because of how their members have to be initialized.
+//
+//KNOWN ERRORS:
+//
+// swap () doesn't move pointers within a struct. So, swap
+// ((int*)(&structa), (int*)(&structb)) will result in all values being
+// swapped, but all pointers (including all strings!) staying the same.
+//
+// The previous warning applied before I added checking if both operands
+// were the same pointer; after I added that check, only the first member
+// of a struct was swapped. I'm not sure why, when I'm swapping the
+// address the pointer variable points to... This is true of both structs
+// and typedef'd structs.
+//
+// Neither swap() nor swapPtr() can swap an array. I'm still trying to
+// figure that one out.
+//
+// These warnings are also true of swapPtr.
 //
 void swap (int* x, int* y);
 // To swap pointers, cast either (void**)(&ptr) or &((void*)ptr)
