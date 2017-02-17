@@ -18,6 +18,9 @@ width
 * `#define Kib, Mib, Gib, Tib` for kibibytes, mebibytes, gibibytes, and tebibytes.
 (Does anyone else miss when we could just call them kilobytes, etc. and
 distinguish that from 1000 bytes?)
+* `epsilonFloat` and `epsilonDouble` are globals containing the value of machine epsilon
+	for float and double types. I may later factor these into lambdas or defines, but for
+		now they have helper functions which are defined in the header.
 
 ###Math
 * `int pow (int base, int exp)` for integer exponents
