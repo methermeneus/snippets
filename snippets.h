@@ -164,6 +164,9 @@ inline int abs (int x) {return (x ^ sex(x)) - sex(x);}
 // get back garbage or evidence that I'm only altering the lower-order
 // bits of the mantissa (eg: 1.3 returns 1.297784 or whatever).
 //
+// Experimentation shows I get similar errors when using this on 32-bit
+// Windows. So weird.
+//
 //
 
 
