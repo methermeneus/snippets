@@ -96,6 +96,51 @@ typedef uintptr_t    ptr;
 // have it.
 #define Tib(x) (1024*(Gib(x)))
 
+// Get machine epsilon. If this matters for other things, I'll add them,
+// but we're probably only really worried about epsilon for float and
+// double in most scenarios. The two WILL be different, so I've made
+// different functions rather than overloading. This won't change during
+// any given compilation session, though, so we're just gonna leave it
+// here in the header to create a global.
+//
+// Side note: I used these to test a square root function, even though I
+// knew I wouldn't actually use it in this library, since the builtin
+// already uses a square root machine instruction, which makes it about
+// as fast as you can get.
+//
+float getEpsilonFloat (void) {
+	float max         = 1.0f;
+	float min         = 0.0f;
+	float test        = 0.0f;
+	float onePlusTest = 0.0f;
+	int   i           = 0;
+
+	for (i = 0; i < 100000; ++i) {
+		test = (max + min) / 2.0f;
+		onePlusTest = 1.0f + test;
+		if (onePlusTest == 1.0f) min = test;
+		else max = test;
+	}
+	return max;
+}
+float epsilonFloat = getEpsilonFloat ();
+
+double getEpsilonDouble (void) {
+	double max         = 1.0;
+	double min         = 0.0;
+	double test        = 0.0;
+	double onePlusTest = 0.0;
+	int    i           = 0;
+
+	for (i = 0; i < 100000; ++i) {
+		test = (max + min) / 2.0;
+		onePlusTest = 1.0 + test;
+		if (onePlusTest == 1.0) min = test;
+		else max = test;
+	}
+	return max;
+}
+double epsilonDouble = getEpsilonDouble ();
 
 /********************************************************************
  **                                                                **

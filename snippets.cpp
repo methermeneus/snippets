@@ -2,6 +2,17 @@
 
 /********************************************************************
  **                                                                **
+ **                        USEFUL NUMBERS                          **
+ **                                                                **
+ *******************************************************************/
+
+// This section defines two functions in the header; however, since their
+// entire purpose is to create a single global each, they are defined in
+// the header immediately before each global. (Those globals are machine
+// epsilon for float and double, incidentally.) I may lambda those later.
+
+/********************************************************************
+ **                                                                **
  **                    MATHEMATICAL FUNCTIONS                      **
  **                                                                **
  **                                                                **
@@ -91,16 +102,8 @@ void printbits (int64 input) {
  *******************************************************************/
 
 int main () {
-
-	int x[4] = {-1, 2, -3, 4};
-	float y[4] = {-1.3, 2.718281828459045, -3.0, 4.17};
-
-	for (int i = 0; i < 4; ++i) {
-		printf ("x[%d] = %d;\ty[%d] = %f\n", i, abs(x[i]), i, abs(y[i]));
-	}
-
-	printf ("sizeof int is %lu\nsizeof float is %lu\n", sizeof (int), sizeof (float));
-
+	printf ("epsilonDouble is %.30lf\n", epsilonDouble);
+	printf ("epsilonFloat is %.20f\n", epsilonFloat);
 	return 0;
 }
 #endif
