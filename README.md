@@ -45,6 +45,14 @@ elsewhere).
 * `void printbits (int input)` Print the actual bits of a variable. Currently
 overloaded for all basic integer types, but it works just as well with casting types
 of the same sizes (1, 2, 4, 8 bytes). Useful for debugging flags and masks.
+* `void pressAnyKey (void)` Allow user to press any key to continue. POSIX-only, probably
+	terminal-only.
+
+##OTHER FILES:
+* `countdown.cpp`: Displays a countdown (provided as a command-line argument) in seconds
+in the center of a terminal screen. Just something I did to mess around with ANSI escapes
+in printf(). Not even remotely a professional program, but I thought it was amusing enough
+to include.
 
 ##TODO:
 - [ ] Overload all int functions for all integer types
