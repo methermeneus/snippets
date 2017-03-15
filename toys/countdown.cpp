@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "snippets.cpp"
+#include "../snippets.cpp"
 
 int main (int argc, char *argv[]) {
 	if (argc != 2) {
