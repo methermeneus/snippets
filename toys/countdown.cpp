@@ -1,13 +1,13 @@
 // Playing around with ASCII escapes
 
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
+#include <stdio.h> // fflush(), printf(), fprintf()
+#include <unistd.h> // usleep ()
+#include <sys/ioctl.h> // ioctl, TIOCGWINSSZ, struct winsize
+#include <stdlib.h> // atoi()
+#include <ctype.h> // isdigit ()
+#include <string.h> // strlen ()
 
-#include "../snippets.cpp"
+#include "../snippets.cpp" // pressanykey()
 
 int main (int argc, char *argv[]) {
 	if (argc != 2) {
@@ -28,7 +28,7 @@ int main (int argc, char *argv[]) {
 	int k = atoi (argv[1]);
 	if (k > 60 * 5) {
 		fprintf (stderr, "Seriously? You want to do this for more than 5 minutes? Edit the code a bit, then.\n");
-		return ((5*60)+1);
+		return ((5*60)+1); // How often do you get to make a joke of your error number?
 	}
 	struct winsize xy;
 	ioctl (1, TIOCGWINSZ, &xy);
