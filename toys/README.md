@@ -17,7 +17,7 @@ formatting very clean.
 	fiddling, so this also checks if the difference between the expected result and the
 	actual result is significant (ie: greater than ε), and only outputs the expected answer
 	if the difference is insignificant.
-* __ePiI.py: Same as above, but in python, because why not?
+* __ePiI.py__: Same as above, but in python, because why not?
 * __estimatePiByGCD.c__: After watching Matt Parker's 2017 Pi Day video, wherein he
 	estimates pi from the ratio of coprimes to non-coprimes within a set of 500 pairs of
 	random numbers between 1 and 120 (by laboriously rolling a pair of d-120s 500 times), I
