@@ -28,5 +28,8 @@ formatting very clean.
 	couple hundred. Just using, say twenty, however, can give you numbers like 2.4 and 4.0,
 	which are obviously horrible estimates; 150 or more should mostly keep you within 10%.
 	(See the video here: https://www.youtube.com/watch?v=RZBhSi_PwHU )
+* __triangle.cpp__: Prints the nth triangle number and its corresponding triangle (limited
+	by terminal width). If the caller doesn't provide a number, prints a demonstration of
+	the ninth triangle number, which is 45. For fun, try printing the 36th triangle number!
 
 Watch this space for more silly little useless one-hour-type projects!
