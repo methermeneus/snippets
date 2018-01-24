@@ -2,10 +2,10 @@
 // to 1 via the Collatz conjecture.
 // Why, yes, I do think of these by watching Numberphile, why do you ask?
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include "../snippets.cpp"
+#include <stdio.h>			// printf(), fprintf(), stderr
+#include <stdlib.h>			// atoi()
+#include <ctype.h>			// isdigit()
+#include "../snippets.cpp"	// uint64
 
 int main (int argc, char* argv[]) {
 	if (argc < 2) {

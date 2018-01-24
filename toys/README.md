@@ -28,6 +28,20 @@ formatting very clean.
 	couple hundred. Just using, say twenty, however, can give you numbers like 2.4 and 4.0,
 	which are obviously horrible estimates; 150 or more should mostly keep you within 10%.
 	(See the video here: https://www.youtube.com/watch?v=RZBhSi_PwHU )
+* __collatz.c__: First Matt Parker, now Numberphile? Given a number, output the number of
+	steps to reach 1 via the Collatz conjecture.
+* __fizzbuzz.cpp__: Because I heard mention that some prospective programmers can't do it
+	even after four years of college. Screw dat. Twenty minutes, including error checking.
+	Five minutes not including error checking.
+* __sha1.c__: Basic (and probably naive) implementation of the sha1 hash, because I
+	happened upon an explanation of the math (Computerphile, this time) and wanted to see if
+	I could. Sha1 is useful, but having my own personal implementation of it is not, hence
+	toys, although it does include a few bits I may migrate to snippets.
+* __c14.c__: Because I heard someone (Kent Hovind, maybe?) making fun of C-14 dating by
+	claiming a ball of C-14 the size of the earth would take some silly amount of time to
+	disappear, I decided to see just how long it would actually take. The calculations are
+	very basic, but I did go so far as to calculate for both a C-14 planet with Earth's mass
+	and one with Earth's volume.
 * __triangle.cpp__: Prints the nth triangle number and its corresponding triangle (limited
 	by terminal width). If the caller doesn't provide a number, prints a demonstration of
 	the ninth triangle number, which is 45. For fun, try printing the 36th triangle number!

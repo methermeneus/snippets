@@ -143,7 +143,7 @@ uint32 sha1LittleEndian (uint32 *message, int64 messageLen, uint32* result) {
 )
 	
 	// P does two operations, so it does need pointers, since C doesn't
-	// do polymorphism.
+	// do polymorphism. C++ would probably be fine, though.
 	inline void P (uint32 *a, uint32 *b, uint32 *c, uint32 *d uint32 *e, uint32 *x) {
 		(*e) += S (*a, 5) + F (*b, *c, *d) + K + x;
 		(*b) = S (b, 30);
