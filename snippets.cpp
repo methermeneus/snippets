@@ -1,4 +1,5 @@
 #ifndef RAG_SNIPPETS
+//#define DEBUG
 /********************************************************************
  **                        CODE SNIPPETS                           **
  ** by Randy Grant (methermeneus@gmail.com)                        **
@@ -43,7 +44,7 @@
  **                            MACROS                              **
  **                                                                **
  *******************************************************************/
-
+#ifndef CONCAT
 // Quick concatenation thing, because I actually like doing this
 // sometimes. All caps because MACROS. To concatenate 3 items, CONCAT(a,
 // (CONCAT (b, c)) (or CONCAT (CONCAT (a, b), c), whatever works best in
@@ -60,7 +61,7 @@
 //
 #define CONCAT(a,b) CONCAT_HIDDEN(a,b)
 #define CONCAT_HIDDEN(a,b) a ## b
-
+#endif // CONCAT
 
 /********************************************************************
  **                                                                **
@@ -70,6 +71,7 @@
 // We don't need to #define BITS 8 because limits.h defines CHAR_BIT as
 // 8
 
+#ifndef INT_TYPES
 // Integral types
 typedef int8_t       int8;
 typedef int16_t      int16;
@@ -81,19 +83,34 @@ typedef uint32_t     uint32;
 typedef uint64_t     uint64;
 typedef unsigned int uint;
 typedef uintptr_t    ptr;
+#define INT_TYPES
+#endif // INT_TYPES
 
+#ifndef PTR_WIDTH
 // Byte stuff
 #define PTR_WIDTH sizeof(uintptr_t)*CHAR_BIT
+#endif // PTR_WIDTH
 
+#ifndef XBIBYTES
 // Remember, definitions have changed. Now 1 kilobyte (Kb) is 1000 bytes,
 // and 1 kibibyte (Kib) is 1024 bytes.
-#define Kib(x) (1024*(x))
-#define Mib(x) (1024*(Kib(x)))
-#define Gib(x) (1024*(Mib(x)))
+#define KiB(x) (1024*(x))
+#define KB(x)  (1000*(x))
+
+#define MiB(x) (1024*(KiB(x)))
+#define MB(x)  (1000*(KB(x)))
+
+#define GiB(x) (1024*(MiB(x)))
+#define GB(x)  (1000*(MB(x)))
+
 // Probably won't use this one ever, but not like it costs anything to
 // have it.
-#define Tib(x) (1024*(Gib(x)))
+#define TiB(x) (1024*(GiB(x)))
+#define TB(x)  (1000*(GB(x)))
+#define XBIBYTES
+#endif // XBIBYTES
 
+#ifndef EPSILON
 // Get machine epsilon. If this matters for other things, I'll add them,
 // but we're probably only really worried about epsilon for float and
 // double in most scenarios. The two WILL be different, so I've made
@@ -106,7 +123,7 @@ typedef uintptr_t    ptr;
 // already uses a square root machine instruction, which makes it about
 // as fast as you can get.
 //
-float getEpsilonFloat (void) {
+inline float getEpsilonFloat (void) {
 	float max         = 1.0f;
 	float min         = 0.0f;
 	float test        = 0.0f;
@@ -122,8 +139,9 @@ float getEpsilonFloat (void) {
 	return max;
 }
 float epsilonFloat = getEpsilonFloat ();
+#define EPSILON_F //getEpsilonFloat()
 
-double getEpsilonDouble (void) {
+inline double getEpsilonDouble (void) {
 	double max         = 1.0;
 	double min         = 0.0;
 	double test        = 0.0;
@@ -139,6 +157,9 @@ double getEpsilonDouble (void) {
 	return max;
 }
 double epsilonDouble = getEpsilonDouble ();
+double epsilon = epsilonDouble;
+#define EPSILON // getEpsilonDouble ()
+#endif // EPSILON
 
 /********************************************************************
  **                                                                **
@@ -148,6 +169,7 @@ double epsilonDouble = getEpsilonDouble ();
  *******************************************************************/
 // TODO(randy): Overload for all integral types.
 
+#ifndef INT_POW
 // This should overload the math.h pow() to also work with integers.
 int pow (int base, int exp) {
 	int result = 1;
@@ -158,13 +180,18 @@ int pow (int base, int exp) {
 	}
 	return result;
 }
+#define INT_POW
+#endif //INT_POW
 
+#ifndef SEX
 // Helper function to create sign-bit-based masks borrowed from
 // https://hbfs.wordpress.com/2008/08/05/brancheless-equivalents-of-simple-functions,
 // who borrowed it from a Motorola 6809 instruction for (s)ign (ex)tend:
 inline uint sex (int x) {
 	return x >> (CHAR_BIT * sizeof (int) - 1);
 }
+#define SEX
+#endif // SEX
 	/*
 	 * This uses cbw instructions, but makes assumptions about the
 	 * architecture. I might be able to use macros to get everything
@@ -190,9 +217,12 @@ inline uint sex (int x) {
 	} z = {.w=x};
 	return z.hi;*/
 
+#ifndef INT_ABS
 // Nonbranching math functions for int.
 // Nonbranching version of abs().
 inline int abs (int x) {return (x ^ sex(x)) - sex(x);}
+#define INT_ABS
+#endif // INT_ABS
 
 // Not hard to make a float version, but it turns out a float version's
 // basically useless, too.
@@ -225,8 +255,16 @@ inline int abs (int x) {return (x ^ sex(x)) - sex(x);}
 // returns an rvalue, so I do still need to store y.
 // TODO: MACRO code to change the mask for the system wordsize, and
 // overload for double.
+
+#ifndef INT_FLOOR
 inline int floor  (int a, int b) {return b + ((a - b) & sex (a-b));}
+#define INT_FLOOR
+#endif // INT_FLOOR
+
+#ifndef INT_CEIL
 inline int ceil   (int a, int b) {return a + ((b-a) & ~sex (b-a));}
+#define INT_CEIL
+#endif // INT_CEIL
 
 /********************************************************************
  **                                                                **
@@ -261,19 +299,23 @@ inline int ceil   (int a, int b) {return a + ((b-a) & ~sex (b-a));}
 //
 // These warnings are also true of swapPtr.
 //
+#ifndef SWAP
 void swap (int* x, int* y) {
 	if (x == y) return; // x ^ x = 0, which would be bad!
 	*x ^= *y;
 	*y ^= *x;
 	*x ^= *y;
 }
+#define SWAP
+#endif // SWAP
 
+#ifndef SWAP_PTR
 // To swap pointers, cast either (void**)(&ptr) or &((void*)ptr)
 void swapPtr (void** x, void** y) {
 	if (x == y) return; // x ^ x = 0, which would be bad!
 	// Each version basically evaluates to the other; I'm sure there'd be
 	// no difference in a disassembler. Yes, I've tested that this works
-	// withotu errors, at least in basic cases.
+	// without errors, at least in basic cases.
 	//*x = (void*)((CONCAT(uint,WORDSIZE)) *x ^ (CONCAT(uint,WORDSIZE)) *y);
 	//*y = (void*)((CONCAT(uint,WORDSIZE)) *y ^ (CONCAT(uint,WORDSIZE)) *x);
 	//*x = (void*)((CONCAT(uint,WORDSIZE)) *x ^ (CONCAT(uint,WORDSIZE)) *y);
@@ -281,6 +323,10 @@ void swapPtr (void** x, void** y) {
 	*y = (void*) (((ptr) *y) ^ ((ptr) *x));
 	*x = (void*) (((ptr) *x) ^ ((ptr) *y));
 }
+#define SWAP_PTR
+#endif // SWAP_PTR
+
+#ifndef PRINT_BITS
 // Print bits for debugging. (Makes it easier to see what's going on with
 // flags and masks!)
 // Someday, I may overload for int, float, etc., but that'll take
@@ -294,9 +340,6 @@ void printbits (int8 input);
 void printbits (int16 input);
 void printbits (int32 input);
 void printbits (int64 input);
-
-// Block on user input. ANY user input, not just the return key.
-void pressAnyKey (void);
 
 void printbits (uint8 input) {
 	for (int i = 0; i < CHAR_BIT; ++i) {
@@ -330,8 +373,16 @@ void printbits (int64 input) {
 	printbits (*(uint64*)&input);
 }
 // easy to extend to 128 for a sytem that supports it.
+#define PRINT_BITS
+#endif //PRINT_BITS
 
+#ifndef PRESS_ANY_KEY
 #if defined (__unix__) || defined (__linux__) || (defined (__APPLE__) && defined (__MACH__)) || defined (__FreeBSD__) // posix check
+
+// Block on user input. ANY user input, not just the return key.
+// Currently POSIX only.
+void pressAnyKey (void);
+
 void pressAnyKey (void) {
 	// Blocks on user input... but ANY user input, not specifically the
 	// RETURN key.
@@ -347,13 +398,71 @@ void pressAnyKey (void) {
 	tcsetattr (0, TCSANOW, &oldinfo); // reset terminal
 }
 #endif // posix check
+#define PRESS_ANY_KEY
+#endif //PRESS_ANY_KEY
+
+#ifndef ORDINAL_SUFFIXES
+// Expect a lot of comments, because this has to do with English, and English is
+// weird.
+const char* suffix (int ordinal) {
+	// English has different ordinal suffixes for 1, 2, 3, and everything else.
+	enum {
+		first = 1, // 0 is the same as everything else, so start with 1 and let 0 fall to default.
+		second,
+		third
+	};
+	// Positive or negative has no bearing on the suffix.
+	ordinal = abs (ordinal);
+	// The ordinal suffix is as appropriate for the last digit PRONOUNCED.
+	// English doesn't pronounce the ones place separately for 10--19, which
+	// means that 1, 2, and 3 aren't technically present in the language there,
+	// even if they are in the numbers. I could change ordinal to something else
+	// and let it fall through the rest of the function to gain its appropriate
+	// suffix, but if this if fires, I already know what the suffix will be,
+	// so...
+	if ((ordinal == 11) || (ordinal == 12) || (ordinal == 13)) return ("th");
+
+	// silly bit of math to get the last digit, taking advantage of int division
+	ordinal = ordinal - ((ordinal / 10) * 10);
+
+	switch (ordinal) {
+		{case first:  return ("st");
+					  break;}
+		{case second: return ("nd");
+					  break;}
+		{case third:  return ("rd");
+					  break;}
+		{default:     return ("th");
+					  break;}
+	}
+}
+
+#ifdef DEBUG // standin for math.h's abs function, since I can't get my function to work,
+	     //   and anyway the library function is more efficient, since it
+	     //   uses a built-in machine instruction (on x86, anyway). I do
+	     //   need this to test this one function that uses a float abs(),
+	     //   because otherwise it gets cast down to an in to use the int
+	     //   abs() I already defined.
+double abs (double x) {if (x < 0) return (-x); else return (x);}
+float abs (float x) {if (x < 0) return (-x); else return (x);}
+#endif //DEBUG
+const char* suffix (double ordinal) {
+	// Decimals always get a "th" suffix. Well, fractions do; decimals are more
+	// dodgy, but they've gotta have something, right?
+	//if (abs (ordinal - (int)ordinal) == 0) return (suffix ((int) ordinal));
+	if (abs (ordinal - (double)((int)ordinal)) < epsilon) return (suffix ((int) ordinal));
+	else return ("th");
+}
+#define ORDINAL_SUFFIXES
+#endif // ORDINAL_SUFFIXES
+
 
 #define RAG_SNIPPETS
 #endif // header guard
 
 
-//#define DEBUG
 #ifdef DEBUG
+
 /********************************************************************
  **                                                                **
  **                             MAIN                               **
@@ -361,10 +470,13 @@ void pressAnyKey (void) {
  **                                                                **
  *******************************************************************/
 
-int main () {
-	printf ("epsilonDouble is %.30lf\n", epsilonDouble);
-	printf ("epsilonFloat is %.20f\n", epsilonFloat);
-	return 0;
+int main (void) {
+    double f = 0.0;
+    for (int i = 0; i < 100; ++i) {
+        f=(double)i/3;
+        printf("%lf%s\n", f, suffix(f));
+    }
+    return (0);
 }
 #endif // DEBUG
 
