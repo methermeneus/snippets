@@ -266,6 +266,22 @@ inline int ceil   (int a, int b) {return a + ((b-a) & ~sex (b-a));}
 #define INT_CEIL
 #endif // INT_CEIL
 
+#ifndef GCD
+// I tried by subtraction and by division, and by division is massively
+// (around 3x) faster. Any two numbers whose greatest common divisor is 1
+// are coprime
+int gcd (int a, int b) {
+	int t;
+	while (b != 0) {
+		t = b;
+		b = a % b;
+		a = t;
+	}
+	return a;
+}
+#define GCD
+#endif // GCD
+
 /********************************************************************
  **                                                                **
  **                          UTILITIES                             **

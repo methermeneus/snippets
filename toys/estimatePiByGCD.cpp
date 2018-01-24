@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h> // sqrt, atan
 #include <ctype.h> // isdigit
+#include "../snippets.cpp" // GCD
 
 // Estimate pi from the probability of two random numbers being coprime.
 // (idea borrowed from Matt Parker (http://www.youtube.com/channel/UCSju5G2aFaWMqn-_0YBtq5A
@@ -12,18 +13,6 @@
 // pi ^ 2 = 6 / x
 // pi = sqrt (6 / x)
 
-// I tried by subtraction and by division, and by division is massively
-// (around 3x) faster. Any two numbers whose greatest common divisor is 1
-// are coprime
-int gcd (int a, int b) {
-	int t;
-	while (b != 0) {
-		t = b;
-		b = a % b;
-		a = t;
-	}
-	return a;
-}
 
 int main (int argc, char* argv[]) {
 	if (argc > 2) {
