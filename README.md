@@ -1,13 +1,13 @@
-#C[++] Snippets
-##By Randy Grant (methermeneus@gmail.com)
+# C[++] Snippets
+## By Randy Grant (methermeneus@gmail.com)
 
 This is just some simple bits and bobs that I find useful or fun. Some I wrote, some is
 snatched from the internet. I didn't remember to link everything I borrowed (believe it or
 not, it's not all from Stack Exchange!), but it's all simple enough stuff that I don't
 think anyone really cares about credit. All I did was compile it into this one file.
 
-##Features:
-###Numbers
+## Features:
+### Numbers
 * `CONCAT` macro for concatenating variable or function names. Useful for making `var1`,
 `var2`, etc. when you'd rather not use an array for whatever reason.
 * `typedef` various integer names to shorter names that are still easy to remember
@@ -24,7 +24,7 @@ distinguish that from 1000 bytes?)
 	for float and double types. I may later factor these into lambdas or defines, but for
 		now they have helper functions which are defined in the header.
 
-###Math
+### Math
 * `int pow (int base, int exp)` for integer exponents
 * `uint sex (int x)` to get the sign of an int (borrowed from
 https://hbfs.wordpress.com/2008/08/05/brancheless-equivalents-of-simple-functions, who
@@ -33,7 +33,7 @@ borrowed it from a Motorola 6809 instruction)
 * `int floor (int a, int b)` for integer floors
 * `int ceil (int a, int b)` for integer ceilings
 
-###Utilities
+### Utilities
 * `void swap (int* x, int* y)` swap integers in place without temporary storage. (XOR
 swap). To swap floats, just cast them to int pointers (`swap ((int*)(&float1),
 (int*)(&float2))`). Also works for pointers, but int may not be able to hold the whole
@@ -56,11 +56,11 @@ just the suffix; I might change it to return the whole thing ("first" or "1st" i
 use that much, since, while English has well-defined rules for fractions, it doesn't deal
 well with decimal numbers with fractional parts.
 
-##OTHER FILES:
+## OTHER FILES:
 * `Toys` Probably anything that isn't in either snippets.cpp or split out from that if it
 ever gets too bloated is likely to be a toy. They're exactly what it says on the tin.
 
-##TODO:
+## TODO:
 - [ ] Overload all int functions for all integer types
 - [ ] printf overloading for common arrays
 - [ ] overload arrays to structs with length and maybe some methods _without_
