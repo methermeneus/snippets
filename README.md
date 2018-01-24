@@ -66,7 +66,7 @@ ever gets too bloated is likely to be a toy. They're exactly what it says on the
 - [ ] overload arrays to structs with length and maybe some methods _without_
 templates, because screw C++ templates. Or, I can just wait 'till Jonathan Blow
 releases JAI, I suppose.
-- [ ] make a Vim shortcut to create comment boxes, so I can get rid of the one I
+- [x] make a Vim shortcut to create comment boxes, so I can get rid of the one I
 keep at the bottom of snippets.h for copy/pasting
 - [x] overload `printbits()` for int64, because I apparently forgot
 (**headdesk**) (`Apparently, I wrote the definition, but not the declaration. I need more
