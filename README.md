@@ -15,9 +15,11 @@ think anyone really cares about credit. All I did was compile it into this one f
 integers.
 * `#define PTR_WIDTH sizeof(uintptr_t)*CHAR_BIT` to easily access the system's bus
 width
-* `#define Kib, Mib, Gib, Tib` for kibibytes, mebibytes, gibibytes, and tebibytes.
+* `#define KiB, MiB, GiB, TiB` for kibibytes, mebibytes, gibibytes, and tebibytes.
 (Does anyone else miss when we could just call them kilobytes, etc. and
 distinguish that from 1000 bytes?)
+* `#define KB, MB, GB, TB` for the current usage of kilobytes, megabytes, gigabytes, and
+	terabytes (ie: *1000 bytes).
 * `epsilonFloat` and `epsilonDouble` are globals containing the value of machine epsilon
 	for float and double types. I may later factor these into lambdas or defines, but for
 		now they have helper functions which are defined in the header.
@@ -46,13 +48,17 @@ elsewhere).
 overloaded for all basic integer types, but it works just as well with casting types
 of the same sizes (1, 2, 4, 8 bytes). Useful for debugging flags and masks.
 * `void pressAnyKey (void)` Allow user to press any key to continue. POSIX-only, probably
-	terminal-only.
+terminal-only.
+* `const char* suffix (int ordinal)` returns a suffix appropriate to turn a cardinal
+number into an ordinal (eg: "st" suffix (1), "th" suffix (8), etc.). Currently returns
+just the suffix; I might change it to return the whole thing ("first" or "1st" instead of
+"st"), but right now this seems more useful. Also comes in double, but I probably won't
+use that much, since, while English has well-defined rules for fractions, it doesn't deal
+well with decimal numbers with fractional parts.
 
 ##OTHER FILES:
-* `countdown.cpp`: Displays a countdown (provided as a command-line argument) in seconds
-in the center of a terminal screen. Just something I did to mess around with ANSI escapes
-in printf(). Not even remotely a professional program, but I thought it was amusing enough
-to include.
+* `Toys` Probably anything that isn't in either snippets.cpp or split out from that if it
+ever gets too bloated is likely to be a toy. They're exactly what it says on the tin.
 
 ##TODO:
 - [ ] Overload all int functions for all integer types
