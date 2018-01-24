@@ -20,9 +20,6 @@
  **           methods WITHOUT templates, because screw C++         **
  **           templates. Or I can just wait 'til Jonathan Blow     **
  **           releases JAI, I suppose.                             **
- **       - Make a Vim shortcut to create these comment boxes, so  **
- **           I can get rid of the copy/paste example on the bottom**
- **           of the file.                                         **
  **       - Error reporting function (no, we don't need try/throw/ **
  **           catch, dammit!). Something along the lines of        **
  **           int error (char* mesg, int retval), maybe.           **
@@ -160,6 +157,19 @@ double epsilonDouble = getEpsilonDouble ();
 double epsilon = epsilonDouble;
 #define EPSILON // getEpsilonDouble ()
 #endif // EPSILON
+
+// From memory, because I'm a math badass.
+#ifndef E
+#define E 2.718281828459045
+#endif
+
+// Not from memory, because I'm a nonconformist.
+// Calculated beforehand as 4.0*atan(1.0), but not in this code because then I'd
+// have to link the math library, which is overhead I can do without.
+#ifndef PI
+#define PI 3.14159265359
+#endif
+
 
 /********************************************************************
  **                                                                **
@@ -471,6 +481,93 @@ const char* suffix (double ordinal) {
 }
 #define ORDINAL_SUFFIXES
 #endif // ORDINAL_SUFFIXES
+
+#ifndef ENDIANNESS
+int isLittleEndian (void) {
+    uint x = 1;
+    return (int)(*((char*)&x));
+}
+#define ENDIANNESS
+#endif //ENDIANNESS
+
+#ifndef ROTATIONS
+#ifndef ROTL
+uint32 rotL (uint32 value, uint count) {
+    const uint mask = (8 * sizeof (value) - 1);
+    count &= mask;
+    return (value << count) | (value >> ((count * -1) & mask));
+}
+#define ROTL
+#endif // ROTL
+
+#ifndef ROTR
+uint32 rotR (uint32 value, uint count) {
+    const uint mask = (8 * siezof (value) - 1);
+    count &= mask;
+    return (value >> count) | (value << ((count * -1) & mask));
+}
+#define ROTR
+#endif // ROTR
+
+#ifndef ROTATE
+// rot (value, count, 'd') or rot (value, count, "d"), but "d" can be only one
+// character! A direction that is not either a character in {lLrR} or a string
+// beginning with same will return the unrotated value.
+uint32 rot (uint32 value, uint count, char direction) {
+    switch (direction) {
+	{case 'L':
+	 case 'l': return (rotL (value, count));}
+	{case 'R':
+	 case 'r': return (rotR (valeu, count));}
+	{default: return (value);}
+    }
+}
+uint32 rot (uint32 value, uint count, const char *direction) {
+    // Can only use the first character in direction, but if the string is
+    // longer (like, if someone writes "LEFT"), it's not a problem; just
+    // everything past the first character gets thrown away.
+    switch (*direction) {
+	{case 'L':
+	 case 'l': return (rotL (value, count));}
+	{case 'R':
+	 case 'r': return (rotR (valeu, count));}
+	{default: return (value);}
+    }
+}
+#define ROTATE
+#endif // ROTATE
+#define ROTATIONS
+#endif // ROTATIONS
+
+
+#define RAG_SNIPPETS
+#endif // header guard
+
+
+#ifdef DEBUG
+
+/********************************************************************
+ **                                                                **
+ **                             MAIN                               **
+ **                 FOR DEBUGGING PURPOSES ONLY                    **
+ **                                                                **
+ *******************************************************************/
+
+int main (void) {
+    double f = 0.0;
+    for (int i = 0; i < 100; ++i) {
+        f=(double)i/3;
+        printf("%lf%s\n", f, suffix(f));
+    }
+    return (0);
+}
+#endif // DEBUG
+
+
+#define ROTATE
+#endif // ROTATE
+#define ROTATIONS
+#endif // ROTATIONS
 
 
 #define RAG_SNIPPETS

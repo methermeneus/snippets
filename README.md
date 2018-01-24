@@ -23,6 +23,8 @@ distinguish that from 1000 bytes?)
 * `epsilonFloat` and `epsilonDouble` are globals containing the value of machine epsilon
 	for float and double types. I may later factor these into lambdas or defines, but for
 		now they have helper functions which are defined in the header.
+* `E` and `PI` are useful in any number of occasions, and it's nice to have a constant
+	lying around.
 
 ### Math
 * `int pow (int base, int exp)` for integer exponents
@@ -32,6 +34,8 @@ borrowed it from a Motorola 6809 instruction)
 * `int abs (int x)` for integer absolute values
 * `int floor (int a, int b)` for integer floors
 * `int ceil (int a, int b)` for integer ceilings
+* `int gcd (int a, int b)` Get greatest common denominator (useful for finding coprimes!).
+	Uses the division method, which, by my basic tests, is about 3x faster than subtraction.
 
 ### Utilities
 * `void swap (int* x, int* y)` swap integers in place without temporary storage. (XOR
@@ -55,6 +59,15 @@ just the suffix; I might change it to return the whole thing ("first" or "1st" i
 "st"), but right now this seems more useful. Also comes in double, but I probably won't
 use that much, since, while English has well-defined rules for fractions, it doesn't deal
 well with decimal numbers with fractional parts.
+* `uint32 rot[L/R] (uint32 value, uint count [, [const char* direction][char direction]])`
+Bitwise rotation, rather than regular shifting. Functions available include `rotL` (rotate
+left), `rotR` (rotate right), and `rot` (rotate and choose the direction in the
+parameters). The latter takes a final parameter that is either a char ('L' or 'l' for left
+and 'R' or 'r' for right) or a string (AKA, a const char*). Currently, this has no error
+checking for incorrect direction parameters, so "Left" works fine, because "eft" gets
+thrown away, but a typo like "rot (value, count, 'k')" will simply return the unrotated
+value rather than set an error. Your milage may vary concerning whether this is a bug or a
+feature.
 
 ## OTHER FILES:
 * `Toys` Probably anything that isn't in either snippets.cpp or split out from that if it
