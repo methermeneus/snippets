@@ -136,7 +136,6 @@ inline float getEpsilonFloat (void) {
 	return max;
 }
 float epsilonFloat = getEpsilonFloat ();
-#define EPSILON_F //getEpsilonFloat()
 
 inline double getEpsilonDouble (void) {
 	double max         = 1.0;
@@ -155,7 +154,7 @@ inline double getEpsilonDouble (void) {
 }
 double epsilonDouble = getEpsilonDouble ();
 double epsilon = epsilonDouble;
-#define EPSILON // getEpsilonDouble ()
+#define EPSILON
 #endif // EPSILON
 
 // From memory, because I'm a math badass.
@@ -227,8 +226,8 @@ inline uint sex (int x) {
 	} z = {.w=x};
 	return z.hi;*/
 
-#ifndef INT_ABS
 // Nonbranching math functions for int.
+#ifndef INT_ABS
 // Nonbranching version of abs().
 inline int abs (int x) {return (x ^ sex(x)) - sex(x);}
 #define INT_ABS
@@ -407,8 +406,6 @@ void printbits (int64 input) {
 
 // Block on user input. ANY user input, not just the return key.
 // Currently POSIX only.
-void pressAnyKey (void);
-
 void pressAnyKey (void) {
 	// Blocks on user input... but ANY user input, not specifically the
 	// RETURN key.
@@ -534,36 +531,6 @@ uint32 rot (uint32 value, uint count, const char *direction) {
 	{default: return (value);}
     }
 }
-#define ROTATE
-#endif // ROTATE
-#define ROTATIONS
-#endif // ROTATIONS
-
-
-#define RAG_SNIPPETS
-#endif // header guard
-
-
-#ifdef DEBUG
-
-/********************************************************************
- **                                                                **
- **                             MAIN                               **
- **                 FOR DEBUGGING PURPOSES ONLY                    **
- **                                                                **
- *******************************************************************/
-
-int main (void) {
-    double f = 0.0;
-    for (int i = 0; i < 100; ++i) {
-        f=(double)i/3;
-        printf("%lf%s\n", f, suffix(f));
-    }
-    return (0);
-}
-#endif // DEBUG
-
-
 #define ROTATE
 #endif // ROTATE
 #define ROTATIONS
