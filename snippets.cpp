@@ -515,7 +515,7 @@ uint32 rot (uint32 value, uint count, char direction) {
 	{case 'L':
 	 case 'l': return (rotL (value, count));}
 	{case 'R':
-	 case 'r': return (rotR (valeu, count));}
+	 case 'r': return (rotR (value, count));}
 	{default: return (value);}
     }
 }
@@ -527,7 +527,7 @@ uint32 rot (uint32 value, uint count, const char *direction) {
 	{case 'L':
 	 case 'l': return (rotL (value, count));}
 	{case 'R':
-	 case 'r': return (rotR (valeu, count));}
+	 case 'r': return (rotR (value, count));}
 	{default: return (value);}
     }
 }
